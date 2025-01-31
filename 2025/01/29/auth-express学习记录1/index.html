@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>auth-express学习记录1 | Change The World</title><meta name="author" content="Wood"><meta name="copyright" content="Wood"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="二次学习Express-auth[原视频链接](Advanced MERN Auth Course: Email Verification, Password Recovery, and Welcome Emails)初始化项目npm init -y 安装依赖npm install express cookie-parser mailtrap bcryptjs dotenv jsonwebtoke">
+<meta property="og:type" content="article">
+<meta property="og:title" content="auth-express学习记录1">
+<meta property="og:url" content="http://wood1208.github.io/2025/01/29/auth-express%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/index.html">
+<meta property="og:site_name" content="Change The World">
+<meta property="og:description" content="二次学习Express-auth[原视频链接](Advanced MERN Auth Course: Email Verification, Password Recovery, and Welcome Emails)初始化项目npm init -y 安装依赖npm install express cookie-parser mailtrap bcryptjs dotenv jsonwebtoke">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2025-01-29T02:47:01.000Z">
+<meta property="article:modified_time" content="2025-01-30T03:36:23.531Z">
+<meta property="article:author" content="Wood">
+<meta property="article:tag" content="科技改变世界">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="https://s2.loli.net/2024/08/06/cbdTPgnvyipkQu2.png"><link rel="canonical" href="http://wood1208.github.io/2025/01/29/auth-express%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'auth-express学习记录1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-30 11:36:23'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2024/07/27/YZauq1DioWky3wI.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Change The World"><span class="site-name">Change The World</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">auth-express学习记录1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-29T02:47:01.000Z" title="发表于 2025-01-29 10:47:01">2025-01-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-30T03:36:23.531Z" title="更新于 2025-01-30 11:36:23">2025-01-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="auth-express学习记录1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="二次学习Express-auth"><a href="#二次学习Express-auth" class="headerlink" title="二次学习Express-auth"></a>二次学习Express-auth</h3><h4 id="原视频链接-Advanced-MERN-Auth-Course-Email-Verification-Password-Recovery-and-Welcome-Emails"><a href="#原视频链接-Advanced-MERN-Auth-Course-Email-Verification-Password-Recovery-and-Welcome-Emails" class="headerlink" title="[原视频链接](Advanced MERN Auth Course: Email Verification, Password Recovery, and Welcome Emails)"></a>[原视频链接](Advanced MERN Auth Course: Email Verification, Password Recovery, and Welcome Emails)</h4><p>初始化项目<code>npm init -y</code></p>
+<p>安装依赖<code>npm install express cookie-parser mailtrap bcryptjs dotenv jsonwebtoken mongoose crypto</code></p>
+<p>安装<code>npm i nodemon -D</code></p>
+<p>之后步骤略……详情请查看另外的文档。</p>
+<h3 id="（内容补充）"><a href="#（内容补充）" class="headerlink" title="（内容补充）"></a>（内容补充）</h3><h4 id="1-JWT-expiresIn（jwt-sign-中的设置）"><a href="#1-JWT-expiresIn（jwt-sign-中的设置）" class="headerlink" title="1. JWT expiresIn（jwt.sign() 中的设置）"></a>1. <strong>JWT <code>expiresIn</code>（<code>jwt.sign()</code> 中的设置）</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jwt.<span class="title function_">sign</span>(&#123; userId &#125;, process.<span class="property">env</span>.<span class="property">JWT_SERCET</span>, &#123; <span class="attr">expiresIn</span>: <span class="string">&quot;30d&quot;</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>作用</strong>：控制 <strong>JWT</strong> 本身的有效期，即 token 在生成时自带的过期时间。</li>
+<li><strong>过期机制</strong>：JWT 一旦过期，客户端将无法再用这个 token 进行身份验证。即使 token 被存储在 cookie 或 LocalStorage 中，过期后的 JWT 会失效，用户需要重新登录以获得一个新的有效 token。</li>
+<li><strong>生命周期</strong>：JWT 的有效期（如设置为 <code>&quot;30d&quot;</code>）由服务器端在生成时确定，并编码在 token 中。这个过期时间是嵌入在 token 内部的，因此是不可篡改的。</li>
+</ul>
+<h4 id="2-Cookie-maxAge（res-cookie-中的设置）"><a href="#2-Cookie-maxAge（res-cookie-中的设置）" class="headerlink" title="2. Cookie maxAge（res.cookie() 中的设置）"></a>2. <strong>Cookie <code>maxAge</code>（<code>res.cookie()</code> 中的设置）</strong></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="title function_">cookie</span>(<span class="string">&quot;token&quot;</span>, token, &#123; <span class="attr">maxAge</span>: <span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>作用</strong>：控制 <strong>cookie</strong> 的有效期，即存储在浏览器中的 token 在 cookie 中存活的时间。</li>
+<li><strong>过期机制</strong>：设置 <code>maxAge</code> 是告诉浏览器多久后自动删除 cookie（此例为 7 天）。即在这段时间内，浏览器会在每个请求中自动携带 cookie，直到 cookie 过期为止。</li>
+<li><strong>生命周期</strong>：当 <code>maxAge</code> 设置为 7 天时，浏览器会在 7 天内自动携带这个 cookie，但如果 cookie 在这 7 天内没有过期，客户端的请求会依然携带有效的 token 即使 JWT 已经过期。</li>
+</ul>
+<h4 id="区别总结："><a href="#区别总结：" class="headerlink" title="区别总结："></a>区别总结：</h4><ul>
+<li><strong>JWT <code>expiresIn</code></strong> 设置的是 <strong>token 本身的过期时间</strong>，它控制的是 JWT 的生命周期。JWT 在过期后，无法再进行身份验证，用户需要重新登录。</li>
+<li><strong>Cookie <code>maxAge</code></strong> 设置的是 <strong>cookie 的过期时间</strong>，它控制的是 token 在客户端（浏览器）存储的生命周期。即使 JWT token 已经过期，只要 cookie 还没过期，浏览器仍然会携带这个过期的 token。</li>
+</ul>
+<h4 id="常见场景："><a href="#常见场景：" class="headerlink" title="常见场景："></a>常见场景：</h4><ul>
+<li><strong>JWT 过期（<code>expiresIn</code>）</strong>：当你希望用户登录后，token 有一个固定的有效期（例如 30 天），过期后用户需要重新登录，以增强安全性。</li>
+<li><strong>Cookie 过期（<code>maxAge</code>）</strong>：当你希望控制用户登录状态在客户端的存储时间。例如，设置 7 天后自动过期，7 天内用户无需重新登录，但如果 JWT token 本身过期了，还是会要求重新登录。</li>
+</ul>
+<h4 id="例子说明："><a href="#例子说明：" class="headerlink" title="例子说明："></a>例子说明：</h4><ol>
+<li>如果 <code>jwt.sign()</code> 中的 <code>expiresIn</code> 设置为 30 天，而 <code>res.cookie()</code> 中的 <code>maxAge</code> 设置为 7 天：<ul>
+<li>在 7 天内，浏览器会发送 cookie 中的 JWT。</li>
+<li>如果用户尝试在 7 天后使用这个 cookie，浏览器会携带过期的 token，但此时由于 JWT 已经过期，服务器会拒绝请求，需要重新登录以获取新的 token。</li>
+</ul>
+</li>
+<li>如果 <code>maxAge</code> 设置大于 <code>expiresIn</code>：<ul>
+<li>比如将 cookie 的 <code>maxAge</code> 设置为 30 天，token 的 <code>expiresIn</code> 仍然是 7 天。那么在 cookie 存活的 30 天内，用户会自动发送这个 token，但当 JWT 过期后，用户依然无法访问需要身份验证的资源，必须重新登录。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ul>
+<li><code>...user._doc</code> 这个语法是 JavaScript 中的 <strong>扩展运算符（Spread Operator）</strong>，用来<strong>展开</strong>一个对象的所有属性。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="wood1208">Wood</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://wood1208.github.io/2025/01/29/auth-express%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/">http://wood1208.github.io/2025/01/29/auth-express%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wood1208.github.io" target="_blank">Change The World</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/01/26/Electron%E5%B0%9D%E8%AF%95/" title="Electron尝试"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Electron尝试</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2024/07/27/YZauq1DioWky3wI.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Wood</div><div class="author-info__description">这里是木讷少年的blog</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/wood1208"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Wood1208" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2467221512@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的树屋</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E5%AD%A6%E4%B9%A0Express-auth"><span class="toc-number">1.</span> <span class="toc-text">二次学习Express-auth</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E8%A7%86%E9%A2%91%E9%93%BE%E6%8E%A5-Advanced-MERN-Auth-Course-Email-Verification-Password-Recovery-and-Welcome-Emails"><span class="toc-number">1.1.</span> <span class="toc-text">[原视频链接](Advanced MERN Auth Course: Email Verification, Password Recovery, and Welcome Emails)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%88%E5%86%85%E5%AE%B9%E8%A1%A5%E5%85%85%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">（内容补充）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-JWT-expiresIn%EF%BC%88jwt-sign-%E4%B8%AD%E7%9A%84%E8%AE%BE%E7%BD%AE%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">1. JWT expiresIn（jwt.sign() 中的设置）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Cookie-maxAge%EF%BC%88res-cookie-%E4%B8%AD%E7%9A%84%E8%AE%BE%E7%BD%AE%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">2. Cookie maxAge（res.cookie() 中的设置）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">区别总结：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="toc-number">2.4.</span> <span class="toc-text">常见场景：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="toc-number">2.5.</span> <span class="toc-text">例子说明：</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/01/29/auth-express%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/" title="auth-express学习记录1"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="auth-express学习记录1"/></a><div class="content"><a class="title" href="/2025/01/29/auth-express%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/" title="auth-express学习记录1">auth-express学习记录1</a><time datetime="2025-01-29T02:47:01.000Z" title="发表于 2025-01-29 10:47:01">2025-01-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/26/Electron%E5%B0%9D%E8%AF%95/" title="Electron尝试"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Electron尝试"/></a><div class="content"><a class="title" href="/2025/01/26/Electron%E5%B0%9D%E8%AF%95/" title="Electron尝试">Electron尝试</a><time datetime="2025-01-26T06:53:52.000Z" title="发表于 2025-01-26 14:53:52">2025-01-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/20/%E5%B0%9D%E8%AF%95%E6%9E%84%E5%BB%BAExpress%E5%90%8E%E7%AB%AF/" title="尝试构建Express后端"><img src="https://haowallpaper.com/link/common/file/getCroppingImg/16196935926009216" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="尝试构建Express后端"/></a><div class="content"><a class="title" href="/2025/01/20/%E5%B0%9D%E8%AF%95%E6%9E%84%E5%BB%BAExpress%E5%90%8E%E7%AB%AF/" title="尝试构建Express后端">尝试构建Express后端</a><time datetime="2025-01-20T01:58:49.000Z" title="发表于 2025-01-20 09:58:49">2025-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/16/APP%E5%BC%80%E5%8F%91%E5%B0%9D%E8%AF%95%E4%B9%8B%E6%B0%B8%E4%B8%8D%E8%A8%80%E5%BC%83/" title="APP开发尝试之永不言弃"><img src="https://haowallpaper.com/link/common/file/getCroppingImg/16160229703798144" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="APP开发尝试之永不言弃"/></a><div class="content"><a class="title" href="/2025/01/16/APP%E5%BC%80%E5%8F%91%E5%B0%9D%E8%AF%95%E4%B9%8B%E6%B0%B8%E4%B8%8D%E8%A8%80%E5%BC%83/" title="APP开发尝试之永不言弃">APP开发尝试之永不言弃</a><time datetime="2025-01-16T07:08:04.000Z" title="发表于 2025-01-16 15:08:04">2025-01-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/13/%E7%B4%A0%E6%9D%90%E8%8E%B7%E5%8F%96/" title="素材获取"><img src="https://haowallpaper.com/link/common/file/getCroppingImg/15335261271002432" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="素材获取"/></a><div class="content"><a class="title" href="/2025/01/13/%E7%B4%A0%E6%9D%90%E8%8E%B7%E5%8F%96/" title="素材获取">素材获取</a><time datetime="2025-01-13T09:57:57.000Z" title="发表于 2025-01-13 17:57:57">2025-01-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Wood</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">让我们一起改变世界(*^▽^*)</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
